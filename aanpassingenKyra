@@ -1,0 +1,3 @@
+var leven = {
+  aantalLevens: 1,
+}
