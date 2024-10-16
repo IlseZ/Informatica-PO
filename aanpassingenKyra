@@ -1,3 +1,23 @@
+//levens toevoegen
 var leven = {
   aantalLevens: 1,
 }
+
+//De text bovenin die aangeeft hoeveel levens je nog hebt.
+ push();
+    textSize(20);
+    text("Aantal levens:" + leven.aantalLevens,10,25);
+  pop();
+
+ //Zorgt ervoor dat er levens afgaan
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
+    leven.aantalLevens --;
+  }
+
+//Zorgt ervoor dat het spel stopt wanneer de levens op zijn
+  if (leven.aantalLevens <= 0) {
+    background('red');
+    fill('white');
+    text('Je hebt verloren!',30,300);
+    noLoop();
+  }
