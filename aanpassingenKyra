@@ -1,3 +1,5 @@
+//volledige code
+
 //levens toevoegen
 var leven = {
   aantalLevens: 1,
@@ -21,3 +23,72 @@ var leven = {
     text('Je hebt verloren!',30,300);
     noLoop();
   }
+
+//vervang beweeg() bij class Jos
+beweeg() {
+    if (keyIsDown(65)) {
+      this.x -= this.stapGrootte;
+      this.frameNummer = 2;
+    }
+    if (keyIsDown(68)) {
+      this.x += this.stapGrootte;
+      this.frameNummer = 1;
+    }
+    if (keyIsDown(87)) {
+      this.y -= this.stapGrootte;
+      this.frameNummer = 4;
+    }
+    if (keyIsDown(83)) {
+      this.y += this.stapGrootte;
+      this.frameNummer = 5;
+    }
+
+// onder de toon() functie in de Jos class
+
+verloren() {
+  background('rgb(179,18,18)');
+  fill('white');
+  text('Je hebt verloren!',50,300);
+  noLoop();
+  }
+  
+gewonnen() {
+  background('green');
+  fill('white');
+  text("Je hebt gewonnen!",30,300);
+  noLoop();
+  }
+
+//plekje boven de preload
+class Oranje {
+  constructor(x,y,width,height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+  toon() {
+    push();
+    fill("orange");
+    rect(this.x,this.y,this.width,this.height);
+    pop();
+  }
+}
+
+//In de setup
+oranjeKolom = new Oranje(raster.celGrootte * floor(random() * raster.aantalKolommen),0,raster.celGrootte,canvas.height);
+  oranjeRij = new Oranje(0, raster.celGrootte * floor(random() * raster.aantalRijen),canvas.width,raster.celGrootte);
+
+//in de draw
+ oranjeKolom.toon();
+  oranjeRij.toon();
+
+//vervang de win/verlies
+if (leven.aantalLevens <= 0) {
+    eve.verloren()
+  }
+  
+  if (eve.gehaald) {
+   eve.gewonnen()
+  }
+}
