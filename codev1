@@ -22,10 +22,6 @@ class Raster {
   }
 }
 
-var leven = {
-  aantalLevens: 1,
-}
-
 class Jos {
   constructor() {
     this.x = 400;
@@ -34,6 +30,7 @@ class Jos {
     this.frameNummer =  3;
     this.stapGrootte = null;
     this.gehaald = false;
+    this.levens = 1;
   }
   
   beweeg() {
@@ -232,7 +229,7 @@ function draw() {
 
   push();
     textSize(20);
-    text("Aantal levens:" + leven.aantalLevens,10,25);
+    text("Aantal levens:" +  eve.levens,10,25);
   pop();
   
   eve.beweeg();
@@ -245,20 +242,20 @@ function draw() {
   bob.toon();
   
   if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
-    leven.aantalLevens --;
+    eve.levens --;
   }
 
   if (eve.x == appel1.x && eve.y == appel1.y && !appel1.opgegeten) {
-    leven.aantalLevens += 1;
+    eve.levens += 1;
     appel1.opgegeten = true;
   }
   
   if (eve.x == appel2.x && eve.y == appel2.y && !appel2.opgegeten) {
-    leven.aantalLevens += 1;
+    eve.levens += 1;
     appel2.opgegeten = true;
   } 
   
-  if (leven.aantalLevens <= 0) {
+  if (eve.levens <= 0) {
     eve.verloren()
   }
   
