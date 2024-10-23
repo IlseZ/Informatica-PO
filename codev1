@@ -215,6 +215,11 @@ function setup() {
 
 function draw() {
   background(brug);
+
+ if ( mouseX >= oranjeKolom.x && mouseX <= oranjeKolom.x + raster.celGrootte || mouseY >= oranjeRij.y && mouseY <= oranjeRij.y + raster.celGrootte ) {
+    background("blue");
+  }
+
   oranjeKolom.toon();
   oranjeRij.toon();
   raster.teken();
