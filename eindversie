@@ -169,6 +169,25 @@ class balken {
     pop();
   }
 }
+
+var tijd = {
+  constructor() {
+    seconden = null,
+    minuten = null
+  },
+  
+  tellen() {
+   // moet nog code komen
+  },
+  
+  toon(){
+    push();
+    textSize(20);
+    text("Tijd:" + this.minuten + " min " + this.seconden + " sec",10,50);
+    pop();
+  }
+  
+}
   
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
@@ -218,6 +237,8 @@ function setup() {
 
 function draw() {
   background(brug);
+  tijd.toon();
+
 
 kolomBlauw.toon();
   rijBlauw.toon();
