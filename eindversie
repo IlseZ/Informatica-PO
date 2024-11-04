@@ -108,6 +108,35 @@ class Vijand {
   }
 }
 
+class Bom {
+  constructor () {
+    this.x = floor(random(10, raster.aantalKolommen)) * raster.celGrootte;
+    this.y = floor(random(0, raster.aantalKolommen)) * raster.celGrootte;
+    this.sprite = null;
+    this.stapGrootte = null;
+    this.richting = -1;
+    this.snelheid = null;
+  }
+
+  beweeg() {
+    this.y += this.richting * this.snelheid * this.stapGrootte;
+
+    if (this.y <= 0) {
+      this.richting = 1;
+    } 
+    else if (this.y >= canvas.height - raster.celGrootte) {
+      this.richting = -1;
+    }
+    
+    this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
+    this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+  }
+
+  toon() {
+    image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
+}
+
 // De rode appel
 var appel1 = {
   sprite: null,
