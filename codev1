@@ -155,7 +155,7 @@ var appel2 = {
   
 };
 
-class Oranje {
+class balken {
   constructor(x,y,width,height) {
     this.x = x;
     this.y = y;
@@ -164,7 +164,7 @@ class Oranje {
   }
   toon() {
     push();
-    fill("orange");
+    fill("lightblue");
     rect(this.x,this.y,this.width,this.height);
     pop();
   }
@@ -172,6 +172,8 @@ class Oranje {
   
 function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+  lily = loadImage("images/backgrounds/lily.jpg");
+  zebrapad = loadImage("images/backgrounds/zebrapad.jpg");
 }
 
 function setup() {
@@ -185,8 +187,8 @@ function setup() {
   
   raster.berekenCelGrootte();
   
-  oranjeKolom = new Oranje(raster.celGrootte * floor(random() * raster.aantalKolommen),0,raster.celGrootte,canvas.height);
-  oranjeRij = new Oranje(0, raster.celGrootte * floor(random() * raster.aantalRijen),canvas.width,raster.celGrootte);
+  kolomBlauw = new balken(raster.celGrootte * floor(random() * raster.aantalKolommen),0,raster.celGrootte,canvas.height);
+  rijBlauw = new balken(0, raster.celGrootte * floor(random() * raster.aantalRijen),canvas.width,raster.celGrootte);
   
   eve = new Jos();
   eve.stapGrootte = 1*raster.celGrootte;
@@ -216,13 +218,16 @@ function setup() {
 function draw() {
   background(brug);
 
- if ( mouseX >= oranjeKolom.x && mouseX <= oranjeKolom.x + raster.celGrootte || mouseY >= oranjeRij.y && mouseY <= oranjeRij.y + raster.celGrootte ) {
-    background("blue");
+kolomBlauw.toon();
+  rijBlauw.toon();
+  
+   if ( mouseX >= kolomBlauw.x && mouseX <= kolomBlauw.x + raster.celGrootte) {
+    background(lily);
   }
-
-  oranjeKolom.toon();
-  oranjeRij.toon();
-  raster.teken();
+  if ( mouseY >= rijBlauw.y && mouseY <= rijBlauw.y + raster.celGrootte ) {
+    background(zebrapad);
+  }
+    raster.teken();
 
    if (!appel1.opgegeten) {
       image(appel1.sprite, appel1.x, appel1.y, raster.celGrootte, raster.celGrootte);
