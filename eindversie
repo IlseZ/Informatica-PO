@@ -174,6 +174,7 @@ function preload() {
   brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
   lily = loadImage("images/backgrounds/lily.jpg");
   zebrapad = loadImage("images/backgrounds/zebrapad.jpg");
+  duimpje = loadImage("images/backgrounds/thumbsUp.jfif");
 }
 
 function setup() {
@@ -226,6 +227,9 @@ kolomBlauw.toon();
   }
   if ( mouseY >= rijBlauw.y && mouseY <= rijBlauw.y + raster.celGrootte ) {
     background(zebrapad);
+  }
+  if ( mouseY >= rijBlauw.y && mouseY <= rijBlauw.y + raster.celGrootte && mouseX >= kolomBlauw.x && mouseX <= kolomBlauw.x + raster.celGrootte) {
+    background(duimpje);
   }
     raster.teken();
 
