@@ -342,7 +342,7 @@ kolomBlauw.toon();
   bom4.toon();
   bom5.toon();
   
-  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)) {
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)|| eve.wordtGeraakt(bom1) ||eve.wordtGeraakt(bom2) ||eve.wordtGeraakt(bom3) ||eve.wordtGeraakt(bom4) ||eve.wordtGeraakt(bom5)) {
     eve.levens --;
   }
 
