@@ -326,7 +326,12 @@ kolomBlauw.toon();
   eve.beweeg();
   alice.beweeg();
   bob.beweeg();
-  appel2.beweeg();
+  appel2.beweeg(); 
+  bom1.beweeg();
+  bom2.beweeg();
+  bom3.beweeg();
+  bom4.beweeg();
+  bom5.beweeg();
 
   eve.toon();
   alice.toon();
