@@ -293,7 +293,6 @@ function setup() {
 
 function draw() {
   background(brug);
-  tijd.toon();
 
 
 kolomBlauw.toon();
@@ -309,6 +308,7 @@ kolomBlauw.toon();
     background(duimpje);
   }
     raster.teken();
+    tijd.toon();
 
    if (!appel1.opgegeten) {
       image(appel1.sprite, appel1.x, appel1.y, raster.celGrootte, raster.celGrootte);
