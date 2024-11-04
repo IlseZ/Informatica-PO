@@ -1,0 +1,333 @@
+class Raster {
+  constructor(r,k) {
+    this.aantalRijen = r;
+    this.aantalKolommen = k;
+    this.celGrootte = null;
+  }
+  
+  berekenCelGrootte() {
+    this.celGrootte = canvas.width / this.aantalKolommen;
+  }
+  
+  teken() {
+    push();
+    noFill();
+    stroke('grey');
+    for (var rij = 0;rij < this.aantalRijen;rij++) {
+      for (var kolom = 0;kolom < this.aantalKolommen;kolom++) {
+        rect(kolom*this.celGrootte,rij*this.celGrootte,this.celGrootte,this.celGrootte);
+      }
+    }
+    pop();
+  }
+}
+
+class Jos {
+  constructor() {
+    this.x = 400;
+    this.y = 300;
+    this.animatie = [];
+    this.frameNummer =  3;
+    this.stapGrootte = null;
+    this.gehaald = false;
+    this.levens = 1;
+  }
+  
+  beweeg() {
+    if (keyIsDown(65)) {
+      this.x -= this.stapGrootte;
+      this.frameNummer = 2;
+    }
+    if (keyIsDown(68)) {
+      this.x += this.stapGrootte;
+      this.frameNummer = 1;
+    }
+    if (keyIsDown(87)) {
+      this.y -= this.stapGrootte;
+      this.frameNummer = 4;
+    }
+    if (keyIsDown(83)) {
+      this.y += this.stapGrootte;
+      this.frameNummer = 5;
+    }
+    
+    this.x = constrain(this.x,0,canvas.width);
+    this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+    
+    if (this.x == canvas.width) {
+      this.gehaald = true;
+    }
+  }
+  
+  wordtGeraakt(vijand) {
+    if (this.x == vijand.x && this.y == vijand.y) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+  
+  toon() {
+    image(this.animatie[this.frameNummer],this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
+  
+verloren() {
+  background('rgb(179,18,18)');
+  fill('white');
+  text('Je hebt verloren!',50,300);
+  noLoop();
+  }
+  
+gewonnen() {
+  background('green');
+  fill('white');
+  text("Je hebt gewonnen!",30,300);
+  noLoop();
+  }
+}  
+
+class Vijand {
+  constructor(x,y) {
+    this.x = x;
+    this.y = y;
+    this.sprite = null;
+    this.stapGrootte = null;
+  }
+
+  beweeg() {
+    this.x += floor(random(-1,2))*this.stapGrootte;
+    this.y += floor(random(-1,2))*this.stapGrootte;
+
+    this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
+    this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+  }
+  
+  toon() {
+    image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
+}
+
+class Bom {
+  constructor () {
+    this.x = floor(random(10, raster.aantalKolommen)) * raster.celGrootte;
+    this.y = floor(random(0, raster.aantalKolommen)) * raster.celGrootte;
+    this.sprite = null;
+    this.stapGrootte = null;
+    this.richting = -1;
+    this.snelheid = null;
+  }
+
+  beweeg() {
+    this.y += this.richting * this.snelheid * this.stapGrootte;
+
+    if (this.y <= 0) {
+      this.richting = 1;
+    } 
+    else if (this.y >= canvas.height - raster.celGrootte) {
+      this.richting = -1;
+    }
+    
+    this.x = constrain(this.x,0,canvas.width - raster.celGrootte);
+    this.y = constrain(this.y,0,canvas.height - raster.celGrootte);
+  }
+
+  toon() {
+    image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
+}
+// De rode appel
+var appel1 = {
+  sprite: null,
+  x: null,
+  y: null,
+  opgegeten: false
+};
+
+// De groene appel
+var appel2 = {
+  sprite: null,
+  x: null,
+  y: null,
+  opgegeten: false,
+  stapGrootte: null,
+  richtingx: 1,
+  richtingy: 1,
+  
+  beweeg() {
+    
+    this.x += raster.celGrootte * this.richtingx;
+    this.y += raster.celGrootte * this.richtingy;
+    
+    if (this.y == canvas.height - raster.celGrootte) {
+      this.richtingy = -1;
+    }
+    
+    if (this.y == 0) {
+      this.richtingy = 1;
+    }
+    
+    if (this.x == canvas.width - raster.celGrootte) {
+      this.richtingx = -1;
+    }
+    
+    if (this.x == 0) {
+      this.richtingx = 1;
+    }
+    
+  },
+  
+  toon() { 
+    image(this.sprite,this.x,this.y,raster.celGrootte,raster.celGrootte);
+  }
+  
+};
+
+class Oranje {
+  constructor(x,y,width,height) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+  toon() {
+    push();
+    fill("orange");
+    rect(this.x,this.y,this.width,this.height);
+    pop();
+  }
+}
+  
+function preload() {
+  brug = loadImage("images/backgrounds/dame_op_brug_1800.jpg");
+}
+
+function setup() {
+  canvas = createCanvas(900,600);
+  canvas.parent();
+  frameRate(10);
+  textFont("Verdana");
+  textSize(90);
+  
+  raster = new Raster(12,18);
+  
+  raster.berekenCelGrootte();
+  
+  oranjeKolom = new Oranje(raster.celGrootte * floor(random() * raster.aantalKolommen),0,raster.celGrootte,canvas.height);
+  oranjeRij = new Oranje(0, raster.celGrootte * floor(random() * raster.aantalRijen),canvas.width,raster.celGrootte);
+  
+  eve = new Jos();
+  eve.stapGrootte = 1*raster.celGrootte;
+  for (var b = 0;b < 6;b++) {
+    frameEve = loadImage("images/sprites/Eve100px/Eve_" + b + ".png");
+    eve.animatie.push(frameEve);
+  }
+  
+  alice = new Vijand(700,200);
+  alice.stapGrootte = 1*eve.stapGrootte;
+  alice.sprite = loadImage("images/sprites/Alice100px/Alice.png");
+
+  bob = new Vijand(600,400);
+  bob.stapGrootte = 1*eve.stapGrootte;
+  bob.sprite = loadImage("images/sprites/Bob100px/Bob.png");  
+
+  appel1.x = raster.celGrootte*floor(random() * raster.aantalKolommen);
+  appel1.y = raster.celGrootte*floor(random() * raster.aantalRijen);
+  appel1.sprite = loadImage("images/sprites/appel_1.png")
+  
+  appel2.stapGrootte = 1*raster.celGrootte;
+  appel2.x = raster.celGrootte*floor(random() * raster.aantalKolommen);
+  appel2.y = raster.celGrootte*floor(random() * raster.aantalRijen);
+  appel2.sprite = loadImage("images/sprites/appel_2.png")
+
+  bom1 = new Bom();
+  bom1.stapGrootte = raster.celGrootte;
+  bom1.sprite = loadImage("images/sprites/bom_100px.png");
+  bom1.snelheid = 1
+  
+  bom2 = new Bom();
+  bom2.stapGrootte = raster.celGrootte;
+  bom2.sprite = loadImage("images/sprites/bom_100px.png");
+  bom2.snelheid = 2
+  
+  bom3 = new Bom();
+  bom3.stapGrootte = raster.celGrootte;
+  bom3.sprite = loadImage("images/sprites/bom_100px.png");
+  bom3.snelheid = 3
+  
+  bom4 = new Bom();
+  bom4.stapGrootte = raster.celGrootte;
+  bom4.sprite = loadImage("images/sprites/bom_100px.png");
+  bom4.snelheid = 4
+  
+  bom5 = new Bom();
+  bom5.stapGrootte = raster.celGrootte;
+  bom5.sprite = loadImage("images/sprites/bom_100px.png");
+  bom5.snelheid = 5
+}
+
+function draw() {
+  background(brug);
+
+ if ( mouseX >= oranjeKolom.x && mouseX <= oranjeKolom.x + raster.celGrootte || mouseY >= oranjeRij.y && mouseY <= oranjeRij.y + raster.celGrootte ) {
+    background("blue");
+  }
+
+  oranjeKolom.toon();
+  oranjeRij.toon();
+  raster.teken();
+
+   if (!appel1.opgegeten) {
+      image(appel1.sprite, appel1.x, appel1.y, raster.celGrootte, raster.celGrootte);
+  }
+  
+  if (!appel2.opgegeten) {
+      image(appel2.sprite, appel2.x, appel2.y, raster.celGrootte, raster.celGrootte);
+  }
+
+  push();
+    textSize(20);
+    text("Aantal levens:" +  eve.levens,10,25);
+  pop();
+  
+  eve.beweeg();
+  alice.beweeg();
+  bob.beweeg();
+  appel2.beweeg();
+  bom1.beweeg();
+  bom2.beweeg();
+  bom3.beweeg();
+  bom4.beweeg();
+  bom5.beweeg();
+
+  eve.toon();
+  alice.toon();
+  bob.toon();
+  bom1.toon();
+  bom2.toon();
+  bom3.toon();
+  bom4.toon();
+  bom5.toon();
+  
+  if (eve.wordtGeraakt(alice) || eve.wordtGeraakt(bob)|| eve.wordtGeraakt(bom1) ||eve.wordtGeraakt(bom2) ||eve.wordtGeraakt(bom3) ||eve.wordtGeraakt(bom4) ||eve.wordtGeraakt(bom5)) {
+    eve.levens --;
+  }
+
+  if (eve.x == appel1.x && eve.y == appel1.y && !appel1.opgegeten) {
+    eve.levens += 1;
+    appel1.opgegeten = true;
+  }
+  
+  if (eve.x == appel2.x && eve.y == appel2.y && !appel2.opgegeten) {
+    eve.levens += 1;
+    appel2.opgegeten = true;
+  } 
+  
+  if (eve.levens <= 0) {
+    eve.verloren()
+  }
+  
+  if (eve.gehaald) {
+   eve.gewonnen()
+  }
+}
