@@ -262,6 +262,33 @@ function setup() {
   appel2.x = raster.celGrootte*floor(random() * raster.aantalKolommen);
   appel2.y = raster.celGrootte*floor(random() * raster.aantalRijen);
   appel2.sprite = loadImage("images/sprites/appel_2.png")
+
+  bom1 = new Bom();
+  bom1.stapGrootte = raster.celGrootte;
+  bom1.sprite = loadImage("images/sprites/bom_100px.png");
+  bom1.snelheid = 1
+  
+  bom2 = new Bom();
+  bom2.stapGrootte = raster.celGrootte;
+  bom2.sprite = loadImage("images/sprites/bom_100px.png");
+  bom2.snelheid = 2
+  
+  bom3 = new Bom();
+  bom3.stapGrootte = raster.celGrootte;
+  bom3.sprite = loadImage("images/sprites/bom_100px.png");
+  bom3.snelheid = 3
+  
+  bom4 = new Bom();
+  bom4.stapGrootte = raster.celGrootte;
+  bom4.sprite = loadImage("images/sprites/bom_100px.png");
+  bom4.snelheid = 4
+  
+  bom5 = new Bom();
+  bom5.stapGrootte = raster.celGrootte;
+  bom5.sprite = loadImage("images/sprites/bom_100px.png");
+  bom5.snelheid = 5
+}
+
 }
 
 function draw() {
