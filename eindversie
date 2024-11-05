@@ -204,13 +204,6 @@ class balken {
   }
 }
   
-  toon(){
-    push();
-    textSize(20);
-    text("Tijd:" + this.minuten + " min " + this.seconden + " sec",10,50);
-    pop();
-  }
-  
 }
 
 class Tijd {
