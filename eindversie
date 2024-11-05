@@ -76,6 +76,11 @@ verloren() {
   background('rgb(179,18,18)');
   fill('white');
   text('Je hebt verloren!',50,300);
+   push();
+   fill('white');
+   textSize(40);
+   text('Je levens zijn op!', 275, 375);
+   pop();
   noLoop();
   }
   
@@ -198,16 +203,6 @@ class balken {
     pop();
   }
 }
-
-var tijd = {
-  constructor() {
-    seconden = null,
-    minuten = null
-  },
-  
-  tellen() {
-   // moet nog code komen
-  },
   
   toon(){
     push();
@@ -215,6 +210,36 @@ var tijd = {
     text("Tijd:" + this.minuten + " min " + this.seconden + " sec",10,50);
     pop();
   }
+  
+}
+
+class Tijd {
+ constructor() {
+    this.deciseconden = null;
+  }
+  
+  toon() {
+    push();
+    textSize(20);
+    text("Tijd:" + this.deciseconden + " ds",10,50);
+    pop();
+  }
+  
+  aftellen() {
+    this.deciseconden -= 1;
+  }
+
+ verloren() {
+  background('rgb(179,18,18)');
+  fill('white');
+  text('Je hebt verloren!',50,300);
+   push();
+   fill('white');
+   textSize(40);
+   text('De tijd is om!', 275, 375);
+   pop();
+  noLoop();
+ }
   
 }
   
@@ -287,6 +312,9 @@ function setup() {
   bom5.stapGrootte = raster.celGrootte;
   bom5.sprite = loadImage("images/sprites/bom_100px.png");
   bom5.snelheid = 5
+
+  timer = new Tijd();
+  timer.deciseconden = 300
 }
 
 }
@@ -362,6 +390,10 @@ kolomBlauw.toon();
   
   if (eve.gehaald) {
    eve.gewonnen()
+  }
+
+  if (timer.deciseconden <= 0) {
+    timer.verloren()
   }
 }
 
