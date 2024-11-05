@@ -202,7 +202,6 @@ class balken {
     rect(this.x,this.y,this.width,this.height);
     pop();
   }
-}
   
 }
 
@@ -308,8 +307,6 @@ function setup() {
 
   timer = new Tijd();
   timer.deciseconden = 300
-}
-
 }
 
 function draw() {
