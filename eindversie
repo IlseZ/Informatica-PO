@@ -336,7 +336,8 @@ kolomBlauw.toon();
     background(duimpje);
   }
     raster.teken();
-    tijd.toon();
+    timer.toon();
+    timer.aftellen();
 
    if (!appel1.opgegeten) {
       image(appel1.sprite, appel1.x, appel1.y, raster.celGrootte, raster.celGrootte);
